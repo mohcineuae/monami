@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro Importateur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        
+        nav {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin-bottom: 40px;
+            border-radius: 10px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: #3498db;
+        }
+        
+        .nav-menu a.active {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 30%;
+            height: 30%;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .slogan {
+            font-size: 1.8rem;
+            color: #3498db;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        
+        .services {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            margin: 60px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #f5f7fa;
+        }
+        
+        .services::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .services::-webkit-scrollbar-track {
+            background: #f5f7fa;
+            border-radius: 4px;
+        }
+        
+        .services::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 4px;
+        }
+        
+        .service-card {
+            flex: 0 0 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .service-desc {
+            color: #7f8c8d;
+            line-height: 1.7;
+        }
+        
+        .process {
+            margin: 80px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 60px auto;
+            position: relative;
+        }
+        
+        .steps:before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #bdc3c7;
+            z-index: 1;
+        }
+        
+        .step {
+            text-align: center;
+            width: 20%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .step-desc {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .cta {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 60px 0;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-desc {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #3498db;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .subscribe-section {
+            margin: 80px 0;
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 80px auto;
+        }
+        
+        .subscribe-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .subscribe-desc {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .subscribe-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .subscribe-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .subscribe-input:focus {
+            border-color: #3498db;
+        }
+        
+        .subscribe-button {
+            padding: 15px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .subscribe-button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .slogan {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-menu {
+                gap: 20px;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .steps:before {
+                display: none;
+            }
+            
+            .step {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                text-align: left;
+            }
+            
+            .step-number {
+                margin: 0 0 0 0;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .subscribe-input {
+                width: 100%;
+            }
+            
+            .services {
+                flex-direction: row;
+                gap: 15px;
+            }
+            
+            .service-card {
+                flex: 0 0 280px;
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#home" class="active">Accueil</a></li>
+                <li><a href="#about">À Propos</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="logo.svg" alt="Logo Micro Importateur">
+                </div>
+            </div>
+            <div class="tagline">Nous offrons des solutions logistiques adaptées</div>
+            <div class="slogan">Service jibli</div>
+        </header>
+        
+        <div class="hero" id="home">
+            <h2>Révolutionnons l'importation à petite échelle</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; color: #7f8c8d;">
+                Nous sommes spécialisés dans les services de micro-importation, aidant les petites entreprises et les entrepreneurs 
+                à importer des produits uniques du monde entier grâce à des solutions logistiques sur mesure et efficaces.
+            </p>
+        </div>
+        
+        <div class="services" id="services">
+            <div class="service-card">
+                <div class="service-icon">🚚</div>
+                <h3 class="service-title">Logistique Adaptée</h3>
+                <p class="service-desc">Des solutions logistiques personnalisées qui s'adaptent à vos besoins spécifiques, volumes et délais.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3 class="service-title">Approvisionnement Mondial</h3>
+                <p class="service-desc">Accédez à des produits uniques provenant de marchés internationaux qui ne sont pas disponibles par les canaux d'importation traditionnels, donnant à votre entreprise un avantage concurrentiel.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3 class="service-title">Livraison Rapide</h3>
+                <p class="service-desc">Évitez les longs délais d'expédition grâce à nos solutions logistiques optimisées, obtenant vos produits sur le marché plus rapidement que les méthodes traditionnelles.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3 class="service-title">Service Jibli</h3>
+                <p class="service-desc">Notre service exclusif Jibli vous accompagne à chaque étape, de la recherche de produits jusqu'à la livraison finale, avec un suivi personnalisé et une assistance continue.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">👥</div>
+                <h3 class="service-title">Achat par Groupe</h3>
+                <p class="service-desc">Regroupez vos commandes avec d'autres importateurs pour bénéficier de meilleurs prix d'achat, réduire les coûts de transport et augmenter vos marges bénéficiaires.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">✅</div>
+                <h3 class="service-title">Conformité</h3>
+                <p class="service-desc">Nous nous assurons que tous vos produits importés respectent les normes et réglementations en vigueur, avec des contrôles qualité rigoureux et une documentation complète.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🎓</div>
+                <h3 class="service-title">Formation</h3>
+                <p class="service-desc">Nous proposons des formations complètes sur l'importation, la logistique internationale, l'anglais business, la fiscalité et la gestion commerciale pour vous donner toutes les compétences nécessaires à votre succès.</p>
+            </div>
+        </div>
+        
+        <div class="process" id="about">
+            <h2 class="section-title">Notre Processus</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Consultation</h3>
+                    <p class="step-desc">Nous discutons de vos besoins en produits et de vos objectifs d'importation pour créer une stratégie personnalisée.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Sourcing</h3>
+                    <p class="step-desc">Notre réseau identifie des fournisseurs fiables et négocie des conditions favorables.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Logistique</h3>
+                    <p class="step-desc">Nous concevons une solution logistique adaptée à vos besoins spécifiques.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Transport</h3>
+                    <p class="step-desc">Notre équipe coordonne toutes les étapes du transport pour assurer une livraison sûre et rapide.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Livraison</h3>
+                    <p class="step-desc">Les produits vous sont livrés directement, prêts à être distribués ou vendus.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subscribe-section" id="contact">
+            <h2 class="subscribe-title">Contactez-nous</h2>
+            <p class="subscribe-desc">Remplissez le formulaire ci-dessous pour nous contacter et discuter de vos besoins d'importation.</p>
+            <form class="subscribe-form" onsubmit="event.preventDefault(); alert('Merci pour votre message !');">
+                <input type="text" class="subscribe-input" placeholder="Votre nom" required>
+                <input type="tel" class="subscribe-input" placeholder="Votre téléphone" required>
+                <input type="email" class="subscribe-input" placeholder="Votre email" required>
+                <input type="text" class="subscribe-input" placeholder="Votre adresse" required>
+                <input type="text" class="subscribe-input" placeholder="Votre spécialité commerciale" required>
+                <input type="text" class="subscribe-input" placeholder="Votre capacité financière" required>
+                <input type="text" class="subscribe-input" placeholder="Votre formation souhaitée" required>
+                <button type="submit" class="subscribe-button">Envoyer</button>
+            </form>
+        </div>
+        
+        <div class="cta">
+            <h2 class="cta-title">Commencez Votre Aventure d'Importation</h2>
+            <p class="cta-desc">Rejoignez des centaines d'entrepreneurs qui ont découvert la puissance de la micro-importation. Contactez-nous dès aujourd'hui pour discuter de vos besoins d'importation et obtenir une consultation gratuite.</p>
+            <a href="#" class="btn">Commencer Maintenant</a>
+        </div>
+        
+        <footer>
+            <p>© 2023 Micro Importateur. Tous droits réservés.</p>
+            <p style="margin-top: 10px;">Révolutionnons l'importation à petite échelle grâce à des solutions logistiques adaptées.</p>
+        </footer>
+    </div>
+</body>
+</html>
